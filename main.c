@@ -10,6 +10,7 @@ char tic_tac_toe[3][4]={
         {'7','8','9'}
 };
 char validPositions[10]={'1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
+int turn = 0;
 
 int main(){
 
@@ -20,12 +21,19 @@ int main(){
         printf("Choose a tile:");
         scanf(" %c", &playerChosenTile);
         putInTicTacToe(playerChosenTile, PLAYER);
+        turn++;
         if (won() != 0){
             printTicTacToe();
             printf("You Won!");
             break;
         }
+        if (tie()){
+            printTicTacToe();
+            printf("It's a Tie!");
+            break;
+        }
         computerTurn();
+        turn++;
         if (won() != 0){
             printTicTacToe();
             printf("You Lost!");
@@ -79,7 +87,7 @@ int won(){
 }
 
 int tie(){
-    return 0;
+    return turn == 9;
 }
 
 void removeFromArray(char x){
