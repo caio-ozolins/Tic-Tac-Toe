@@ -1,0 +1,3 @@
+C:\Users\caioo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\223.7571.171\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\Tic_Tac_Toe.dir/objects.a
+C:\Users\caioo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\223.7571.171\bin\mingw\bin\ar.exe qc CMakeFiles\Tic_Tac_Toe.dir/objects.a @CMakeFiles\Tic_Tac_Toe.dir\objects1.rsp
+C:\Users\caioo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\223.7571.171\bin\mingw\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\Tic_Tac_Toe.dir/objects.a -Wl,--no-whole-archive -o Tic_Tac_Toe.exe -Wl,--out-implib,libTic_Tac_Toe.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Tic_Tac_Toe.dir\linklibs.rsp

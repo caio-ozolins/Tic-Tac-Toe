@@ -5,26 +5,32 @@
 #include <time.h>
 
 char tic_tac_toe[3][4]={
-        {'1','4','7'},
-        {'2','5','8'},
-        {'3','6','9'}
+        {'1','2','3'},
+        {'4','5','6'},
+        {'7','8','9'}
 };
 char validPositions[10]={'1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
 
 int main(){
 
-    while (!won() || !gameover()) {
+    while (!won() && !tie()) {
         char playerChosenTile='0';
 
         printTicTacToe();
-        printf("%s\n", validPositions);
         printf("Choose a tile:");
         scanf(" %c", &playerChosenTile);
-        putInTicTacToe(playerChosenTile, 'X');
-        removeFromArray(playerChosenTile);
-        printf("%s\n", validPositions);
+        putInTicTacToe(playerChosenTile, PLAYER);
+        if (won() != 0){
+            printTicTacToe();
+            printf("You Won!");
+            break;
+        }
         computerTurn();
-        printf("%s\n", validPositions);
+        if (won() != 0){
+            printTicTacToe();
+            printf("You Lost!");
+            break;
+        }
     }
 
     return 0;
@@ -32,11 +38,11 @@ int main(){
 
 void printTicTacToe(){
     printf("     |     |     \n");
-    printf("  %c  |  %c  |  %c\n",tic_tac_toe[0][0],tic_tac_toe[1][0],tic_tac_toe[2][0]);
+    printf("  %c  |  %c  |  %c\n",tic_tac_toe[0][0],tic_tac_toe[0][1],tic_tac_toe[0][2]);
     printf("-----|-----|-----\n");
-    printf("  %c  |  %c  |  %c\n",tic_tac_toe[0][1],tic_tac_toe[1][1],tic_tac_toe[2][1]);
+    printf("  %c  |  %c  |  %c\n",tic_tac_toe[1][0],tic_tac_toe[1][1],tic_tac_toe[1][2]);
     printf("-----|-----|-----\n");
-    printf("  %c  |  %c  |  %c\n",tic_tac_toe[0][2],tic_tac_toe[1][2],tic_tac_toe[2][2]);
+    printf("  %c  |  %c  |  %c\n",tic_tac_toe[2][0],tic_tac_toe[2][1],tic_tac_toe[2][2]);
     printf("     |     |     \n");
 }
 
@@ -47,13 +53,32 @@ void putInTicTacToe(char chosenTile, char playerSimbol){
                 tic_tac_toe[i][j] = playerSimbol;
         }
     }
+    removeFromArray(chosenTile);
 }
 
 int won(){
+    int x;
+    if (tic_tac_toe[0][0] == tic_tac_toe[0][1] && tic_tac_toe[0][0] == tic_tac_toe[0][2])
+        return tic_tac_toe[0][0] == PLAYER ? 1 : 2;
+    else if (tic_tac_toe[1][0] == tic_tac_toe[1][1] && tic_tac_toe[1][0] == tic_tac_toe[1][2])
+        return tic_tac_toe[1][0] == PLAYER ? 1 : 2;
+    else if (tic_tac_toe[2][0] == tic_tac_toe[2][1] && tic_tac_toe[2][0] == tic_tac_toe[2][2])
+        return tic_tac_toe[2][0] == PLAYER ? 1 : 2;
+    else if (tic_tac_toe[0][0] == tic_tac_toe[1][0] && tic_tac_toe[0][0] == tic_tac_toe[2][0])
+        return tic_tac_toe[0][0] == PLAYER ? 1 : 2;
+    else if (tic_tac_toe[0][1] == tic_tac_toe[1][1] && tic_tac_toe[0][1] == tic_tac_toe[2][1])
+        return tic_tac_toe[0][1] == PLAYER ? 1 : 2;
+    else if (tic_tac_toe[0][2] == tic_tac_toe[1][2] && tic_tac_toe[0][2] == tic_tac_toe[2][2])
+        return tic_tac_toe[0][2] == PLAYER ? 1 : 2;
+    else if (tic_tac_toe[0][0] == tic_tac_toe[1][1] && tic_tac_toe[0][0] == tic_tac_toe[2][2])
+        return tic_tac_toe[0][0] == PLAYER ? 1 : 2;
+    else if (tic_tac_toe[0][2] == tic_tac_toe[1][1] && tic_tac_toe[0][2] == tic_tac_toe[2][0])
+        return tic_tac_toe[0][2] == PLAYER ? 1 : 2;
+
     return 0;
 }
 
-int gameover(){
+int tie(){
     return 0;
 }
 
@@ -78,8 +103,7 @@ void computerTurn(){
     srand(time(NULL));
     int chosenTileIndex = rand() % (mySizeOf(validPositions));
     char chosenTile = validPositions[chosenTileIndex];
-    putInTicTacToe(chosenTile, '@');
-    removeFromArray(chosenTile);
+    putInTicTacToe(chosenTile, COMPUTER);
 }
 
 int mySizeOf(char array[]){
