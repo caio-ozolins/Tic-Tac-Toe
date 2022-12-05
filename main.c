@@ -10,21 +10,23 @@ char tic_tac_toe[3][4]={
         {'3','6','9'}
 };
 char validPositions[10]={'1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-char player='0';
 
 int main(){
 
     while (!won() || !gameover()) {
+        char playerChosenTile='0';
 
         printTicTacToe();
         printf("%s\n", validPositions);
-        printf("Choose a number:");
-        scanf(" %c", &player);
-        putInTicTacToe(player, 'X');
-        removeFromArray(player);
+        printf("Choose a tile:");
+        scanf(" %c", &playerChosenTile);
+        putInTicTacToe(playerChosenTile, 'X');
+        removeFromArray(playerChosenTile);
+        printf("%s\n", validPositions);
+        computerTurn();
         printf("%s\n", validPositions);
     }
-    
+
     return 0;
 }
 
@@ -56,7 +58,7 @@ int gameover(){
 }
 
 void removeFromArray(char x){
-    int sizeArray = sizeof(validPositions);
+    int sizeArray = mySizeOf(validPositions);
     for (int i = 0; i < sizeArray; ++i) {
         if (validPositions[i] == x){
             for (int j = i; j < sizeArray; ++j) {
@@ -70,4 +72,20 @@ void swap(char* x, char* y){ // Troca dois valores de lugar
     char temp = *x;
     *x = *y;
     *y = temp;
+}
+
+void computerTurn(){
+    srand(time(NULL));
+    int chosenTileIndex = rand() % (mySizeOf(validPositions));
+    char chosenTile = validPositions[chosenTileIndex];
+    putInTicTacToe(chosenTile, '@');
+    removeFromArray(chosenTile);
+}
+
+int mySizeOf(char array[]){
+    int i=0;
+    while (array[i] != '\0'){
+        i++;
+    }
+    return i;
 }
